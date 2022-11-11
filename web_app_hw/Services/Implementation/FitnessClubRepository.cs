@@ -1,30 +1,29 @@
-﻿using web_app_hw.models;
-
+﻿
 namespace web_app_hw.Services.Implementation
 {
     public class FitnessClubRepository : IFitnessClubRepository
     {
-        public int Create(FitnessClub data)
+        public int Create(FitnessClub.Data.FitnessClub data)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IList<FitnessClub> GetAll()
+        public IList<FitnessClub.Data.FitnessClub> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public FitnessClub GetById(int id)
+        public FitnessClub.Data.FitnessClub GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(FitnessClub data)
+        public bool Update(FitnessClub.Data.FitnessClub data)
         {
             throw new NotImplementedException();
         }

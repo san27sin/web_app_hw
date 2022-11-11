@@ -1,6 +1,8 @@
-﻿namespace web_app_hw.Services
+﻿using FitnessClub.Data;
+
+namespace web_app_hw.Services
 {
-    public interface IFitnessClubRepository:IRepository<models.FitnessClub,int>
+    public interface IFitnessClubRepository:IRepository<FitnessClub.Data.FitnessClub, int>
     {
 
     }

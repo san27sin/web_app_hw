@@ -1,3 +1,5 @@
+using FitnessClub.Data;
+using Microsoft.EntityFrameworkCore;
 using web_app_hw.Services;
 using web_app_hw.Services.Implementation;
 
@@ -10,15 +12,26 @@ namespace web_app_hw
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
 
+            #region Configure Repositories
             builder.Services.AddScoped<IClientRepository, ClientRepository>();
             builder.Services.AddScoped<IFitnessClubRepository, FitnessClubRepository>();
             builder.Services.AddScoped<ITypeOfMembershipRepository, TypeOfMembershipRepository>();
+            #endregion
 
-
+            
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            #region Configure EF DBContext Service (FitnessClub Database)
+            builder.Services.AddDbContext<FitnessClubDb>(options =>
+            {
+                options.UseSqlServer(builder.Configuration["Settings:DatabaseOptions:ConnectionString"]);//ссылаемся на переменную в файл настроек
+            });
+            #endregion
+
+
 
             var app = builder.Build();
 

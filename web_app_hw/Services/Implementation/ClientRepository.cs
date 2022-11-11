@@ -1,32 +1,43 @@
-﻿using web_app_hw.models;
+﻿using FitnessClub.Data;
+using web_app_hw.Models.Dto;
 
 namespace web_app_hw.Services.Implementation
 {
     public class ClientRepository : IClientRepository
     {
-        public int Create(Client data)
+        #region region
+
+        private readonly FitnessClubDb _db;
+
+        #endregion 
+
+        public ClientRepository(FitnessClubDb db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public void Delete(int id)
+        public int Create(Client data)
         {
-            throw new NotImplementedException();
+            
+        }
+
+        public bool Delete(int id)
+        {
+            
         }
 
         public IList<Client> GetAll()
         {
-            throw new NotImplementedException();
+            
         }
 
         public Client GetById(int id)
         {
-            throw new NotImplementedException();
-        }
+            
 
-        public void Update(Client data)
+        public bool Update(Client data)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

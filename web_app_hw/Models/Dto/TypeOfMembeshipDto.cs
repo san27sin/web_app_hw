@@ -1,6 +1,6 @@
-﻿namespace web_app_hw.models
+﻿namespace web_app_hw.Models.Dto
 {
-    public class TypeOfMembeship
+    public class TypeOfMembeshipDto
     {
         public Guid Id { get; set; }
         public string Level { get; set; }

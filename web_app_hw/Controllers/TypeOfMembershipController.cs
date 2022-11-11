@@ -7,5 +7,6 @@ namespace web_app_hw.Controllers
     [ApiController]
     public class TypeOfMembershipController : ControllerBase
     {
+
     }
 }

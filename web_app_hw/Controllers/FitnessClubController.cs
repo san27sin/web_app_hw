@@ -21,7 +21,7 @@ namespace web_app_hw.Controllers
         [HttpPost("Create")]
         public IActionResult CreateFitnessClub([FromBody] FitnessClubRequest fitnessClubRequest)
         {
-            return Ok(_fitnessClubRepository.Create(new models.FitnessClub()
+            return Ok(_fitnessClubRepository.Create(new FitnessClub.Data.FitnessClub()
             {
                 Rank = fitnessClubRequest.Rank,
                 Location = fitnessClubRequest.Location

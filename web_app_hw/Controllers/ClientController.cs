@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using web_app_hw.Models.Requests;
 using web_app_hw.Services;
+using FitnessClub.Data;
 
 
 namespace web_app_hw.Controllers
@@ -22,9 +23,8 @@ namespace web_app_hw.Controllers
         [HttpPost("Create")]
         public IActionResult CreateNewClient([FromBody] CreateClientRequest createClientRequest)
         {
-            return Ok(_clientRepository.Create(new models.Client()
+            return Ok(_clientRepository.Create(new Client()
             {
-                 Id = createClientRequest.Id,
                  Name = createClientRequest.Name,
                  Surname = createClientRequest.Surname,
                  BirthDay = createClientRequest.BirthDay                 

@@ -1,6 +1,6 @@
-﻿namespace web_app_hw.models
+﻿namespace web_app_hw.Models.Dto
 {
-    public class Client
+    public class ClientDto
     {
         public int Id { get; set; } //автоматическое создание
         public string Name { get; set; }
@@ -8,6 +8,6 @@
         public DateTime BirthDay { get; set; }
         public string Membership { get; set; }
 
-        public FitnessClub club { get; set; }//автоматическое создание
+        public FitnessClubDto club { get; set; }//автоматическое создание
     }
 }
