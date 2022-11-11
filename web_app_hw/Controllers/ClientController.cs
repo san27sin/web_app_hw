@@ -24,10 +24,10 @@ namespace web_app_hw.Controllers
         public IActionResult CreateNewClient([FromBody] CreateClientRequest createClientRequest)
         {
             return Ok(_clientRepository.Create(new Client()
-            {
+            {                
                  Name = createClientRequest.Name,
                  Surname = createClientRequest.Surname,
-                 BirthDay = createClientRequest.BirthDay                 
+                 BirthDay = createClientRequest.BirthDay,
             }));
         }
 
