@@ -29,6 +29,9 @@ namespace web_app_hw
             {
                 options.UseSqlServer(builder.Configuration["Settings:DatabaseOptions:ConnectionString"]);//ссылаемся на переменную в файл настроек
             });
+
+            //builder.Services.AddSingleton<FitnessClubDb>();
+
             #endregion
 
 

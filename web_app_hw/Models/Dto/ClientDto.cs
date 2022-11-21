@@ -2,12 +2,10 @@
 {
     public class ClientDto
     {
-        public int Id { get; set; } //автоматическое создание
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public DateTime BirthDay { get; set; }
-        public string Membership { get; set; }
-
-        public FitnessClubDto club { get; set; }//автоматическое создание
+        public string? Name { get; set; }
+        public string? Surname { get; set; }
+        public DateTime BirthDay { get; set; }        
+        public int FitnessClubId { get; set; }
+        public virtual int TypeOfMembershipId { get; set; }
     }
 }
