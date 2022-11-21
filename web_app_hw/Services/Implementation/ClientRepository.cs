@@ -46,12 +46,14 @@ namespace web_app_hw.Services.Implementation
         }
             
 
-        public bool Update(Client data)
+        public bool Update(ClientDto data, int id)
         {
-            Client client = GetById(data.Id);
+            Client client = GetById(id);
             if (client != null)
             {
-                client = data;
+                client.Name = data.Name;
+                client.Surname = data.Surname;
+                client.FitnessClubId = data.FitnessClubId;
                 _db.SaveChanges();
                 return true;
             }

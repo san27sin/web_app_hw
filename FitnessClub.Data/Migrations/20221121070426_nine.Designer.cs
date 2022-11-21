@@ -4,6 +4,7 @@ using FitnessClub.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessClub.Data.Migrations
 {
     [DbContext(typeof(FitnessClubDb))]
-    partial class FitnessClubDbModelSnapshot : ModelSnapshot
+    [Migration("20221121070426_nine")]
+    partial class nine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,77 +24,6 @@ namespace FitnessClub.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("FitnessClub.Data.Account", b =>
-                {
-                    b.Property<int>("AccountId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
-
-                    b.Property<string>("EMail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Locked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AccountId");
-
-                    b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("FitnessClub.Data.AccountSession", b =>
-                {
-                    b.Property<int>("SessionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SessionId"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsClosed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SessionToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TimeClosed")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("TimeCreated")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("SessionId");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("AccountSession");
-                });
 
             modelBuilder.Entity("FitnessClub.Data.Client", b =>
                 {
@@ -171,17 +103,6 @@ namespace FitnessClub.Data.Migrations
                     b.ToTable("TypesOfMembership");
                 });
 
-            modelBuilder.Entity("FitnessClub.Data.AccountSession", b =>
-                {
-                    b.HasOne("FitnessClub.Data.Account", "Account")
-                        .WithMany("Sessions")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("FitnessClub.Data.Client", b =>
                 {
                     b.HasOne("FitnessClub.Data.FitnessClub", "FitnessClub")
@@ -199,11 +120,6 @@ namespace FitnessClub.Data.Migrations
                     b.Navigation("FitnessClub");
 
                     b.Navigation("TypeOfMembership");
-                });
-
-            modelBuilder.Entity("FitnessClub.Data.Account", b =>
-                {
-                    b.Navigation("Sessions");
                 });
 
             modelBuilder.Entity("FitnessClub.Data.FitnessClub", b =>
