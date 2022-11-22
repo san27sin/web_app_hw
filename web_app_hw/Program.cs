@@ -1,4 +1,5 @@
 using FitnessClub.Data;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using web_app_hw.Services;
 using web_app_hw.Services.Implementation;
@@ -13,6 +14,8 @@ namespace web_app_hw
             // Add services to the container.
 
             #region Configure Repositories
+            //добавим сервер с логирванием
+            builder.Services.AddSingleton<IAuthenticateService, Services.Implementation.AutnenticateService>();
             builder.Services.AddScoped<IClientRepository, ClientRepository>();
             builder.Services.AddScoped<IFitnessClubRepository, FitnessClubRepository>();
             builder.Services.AddScoped<ITypeOfMembershipRepository, TypeOfMembershipRepository>();
@@ -25,6 +28,8 @@ namespace web_app_hw
             builder.Services.AddSwaggerGen();
 
             #region Configure EF DBContext Service (FitnessClub Database)
+
+
             builder.Services.AddDbContext<FitnessClubDb>(options =>
             {
                 options.UseSqlServer(builder.Configuration["Settings:DatabaseOptions:ConnectionString"]);//ссылаемся на переменную в файл настроек
