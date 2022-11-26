@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using web_app_hw.Models.Dto;
 using web_app_hw.Services;
 using FitnessClub.Data;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace web_app_hw.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase

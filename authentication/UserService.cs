@@ -16,7 +16,7 @@ namespace authentication
         private IDictionary<string, string> _users = new Dictionary<string, string>()
         {
             { "user1", "password" }, // 0
-            { "user2", "password" }, // 1
+            { "alex", "12345" }, // 1
             { "user3", "password" }, // 2
             { "user4", "password" }, // 3
             { "user5", "password" }, // 4

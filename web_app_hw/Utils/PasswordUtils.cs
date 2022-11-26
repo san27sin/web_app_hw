@@ -42,7 +42,7 @@ namespace AccountHelper
 
             SHA512 sha512 = new SHA512Managed();//используем массив для шифрования
             byte[] passwordHash = sha512.ComputeHash(buffer);
-            return Convert.ToBase64String(passwordHash);
+            return Convert.ToBase64String(passwordHash);//получаем другой хэш на выходе
         }
     }
 }

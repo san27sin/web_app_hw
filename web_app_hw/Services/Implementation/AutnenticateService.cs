@@ -3,6 +3,7 @@ using FitnessClub.Data;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,7 +17,7 @@ namespace web_app_hw.Services.Implementation
     public class AutnenticateService : IAuthenticateService
     {
 
-        public string SecretCode = "48dfgfdsd$jfgghdghdfgh34253453245dsafasdfsadfgfhfgh23542345fgdsfg!";
+        public const string SecretKey = "48dfgfdsd$jfgghdghdfgh34253453245dsafasdfsadfgfhfgh23542345fgdsfg!";
         //коллекция сессий пользователей нашего пользователя
         private readonly Dictionary <string, SessionDto> _sessions = new Dictionary<string, SessionDto> ();
         
@@ -29,9 +30,43 @@ namespace web_app_hw.Services.Implementation
             _serviceScopeFactory = serviceScopeFactory;
         }
 
+        ///нужен для проверки сессии которой владеет наш клиент
         public SessionDto GetSessionInfo(string sessionToken)
         {
-            throw new NotImplementedException();
+            SessionDto sessionDto = null;
+
+            lock(_sessions)//ограничивает вход потоков по одному, не дает использовать сразу нескольким потокам
+            {
+                _sessions.TryGetValue (sessionToken, out sessionDto);  
+            }
+
+            if(sessionDto == null)
+            {
+                using IServiceScope scope = _serviceScopeFactory.CreateScope();
+                
+                FitnessClubDb context = scope.ServiceProvider.GetRequiredService<FitnessClubDb>();
+
+                AccountSession session = context
+                    .AccountSessions
+                    .FirstOrDefault (s => s.SessionToken == sessionToken);//находим сессию 
+
+                if (sessionDto == null)
+                    return null;
+
+                Account account = context.Accounts.FirstOrDefault(item => item.AccountId == session.AccountId);//сравниваем объект сессии и объект account 
+
+                sessionDto = GetSessionDto(account, session);//склеиваем объект и получаем sessiondto
+
+                if(sessionDto != null)
+                {
+                    lock(_sessions)
+                    {
+                        _sessions[sessionToken] = sessionDto;//помщяем сессию в коллекцию 
+                    }
+                }
+            }
+
+            return sessionDto;
         }
 
         /// <summary>
@@ -89,7 +124,7 @@ namespace web_app_hw.Services.Implementation
                 Status = AuthenticationStatus.Success,
                 Session = sessionDto
             };
-        }
+            }
         
         public SessionDto GetSession(string sessionToken)
         {
@@ -130,7 +165,7 @@ namespace web_app_hw.Services.Implementation
             JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
 
             //переводим ключ из массив байт
-            byte[] key = Encoding.ASCII.GetBytes(SecretCode);
+            byte[] key = Encoding.ASCII.GetBytes(SecretKey);
 
             //2)создаем дескриптор 
             SecurityTokenDescriptor securityTokenDescriptor = new SecurityTokenDescriptor();

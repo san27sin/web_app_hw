@@ -18,14 +18,15 @@ namespace AccountHelper
             byte[] buffer = new byte[16];
             //преднозначение класса для закодирования
             RNGCryptoServiceProvider rngCrypto = new RNGCryptoServiceProvider();
-            rngCrypto.GetBytes(buffer);//кодируем в байты
+            rngCrypto.GetBytes(buffer);//генерируем случайное последовательность байт
 
             //на входе передаем массив байт, а навыходе строковое представление
-            string passwordSalt = Convert.ToBase64String(buffer);//это мы сгенерировали соль 
+            string passwordSalt = Convert.ToBase64String(buffer);//это мы сгенерировали соль, это строковое представления нашего массива байт
+
 
             string passwordHash = GetPasswordHash(password, passwordSalt);
 
-            return (password, passwordSalt);//возвращаем пароль и хэш
+            return (passwordSalt, passwordHash);//возвращаем пароль и хэш
 
             //создание хэша пароля для хранения его в базе данных
         }
@@ -37,6 +38,7 @@ namespace AccountHelper
 
         public static string GetPasswordHash(string password, string passwordSalt)
         {
+            //build password string
             password = $"{password}%{passwordSalt}%{SecretKey}";//создаем хэш
             byte[] buffer = Encoding.UTF8.GetBytes(password);//создали массив байтов
 
