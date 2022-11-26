@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FitnessClub.Data
 {
+    //[Table("FitnessClubs")]
     public class FitnessClub
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }//автоматически
-        [Column(TypeName = "nvarchar(128)")]
-        public string Rank { get; set; }
-        [Column(TypeName = "nvarchar(128)")]
-        public string Location { get; set; }
 
-        [InverseProperty(nameof(Client.FitnessClub))]
-        public virtual ICollection<Client> Clients { get; set; } = new HashSet<Client>();
+        public string Rank { get; set; }
+
+        public string Location { get; set; }
+                
+        public virtual List<Client> Clients { get; set; } = new ();
+        
     }
 }
