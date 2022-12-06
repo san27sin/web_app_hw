@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AccountHelper
+namespace web_app_hw
 {
     public static class PasswordUtils
     {

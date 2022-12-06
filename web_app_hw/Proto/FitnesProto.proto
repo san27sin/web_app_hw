@@ -1,0 +1,94 @@
+//на подобие контроллера
+//генерирует абстрактный класс
+syntax = "proto3";
+
+option csharp_namespace = "web_app_hwProto";
+
+package web_app_hw.Proto;//указание namespace при генерации конечных классов
+
+service ClientService{
+	//переносим сюда процедуры в рамках текущего синтаксиса
+	//rpc - оператор, указывающий на remote procedure coding (stand for)
+	rpc CreateNewClient(CreateNewClientDto) returns(CreateNewClientDtoResponce);
+    rpc GetAllClients(GetAllClientsRequest) returns(GetAllClientsResponce);
+	rpc GetClientById(GetClientByIdRequest) returns(GetClientByIdResponce);
+    rpc DeleteClientById(DeleteClientByIdRequest) returns(DeleteClientByIdResponce);
+    rpc UpdateClient(UpdateClientRequest) returns(UpdateClientResponce);
+}
+
+///////////////////////method CreateNewClient
+//request на создание нового клиента
+message CreateNewClientDto{ //идет на входе
+	string name = 1;//параметры нумеруются
+    string surname = 2;
+    string birthDay = 3;       
+    int32 fitnessClubId = 4;
+    int32 typeOfMembershipId = 5;
+}
+
+message CreateNewClientDtoResponce{
+    int32 id = 1;	
+}
+///////////////////////method CreateNewClient
+
+
+
+///////////////////////method GetAllClients
+message GetAllClientsRequest{
+    //пустой на входе
+}
+
+message GetAllClientsResponce{
+    //коллекии в языке idle нету,
+    //repeated - аналог коллекии в питоне
+    repeated Client clients = 1;//возвращаем коллекцию на питоне
+}
+
+message  Client{
+    int32 id = 1;
+    string name = 2;//параметры нумеруются
+    string surname = 3;
+    string birthDay = 4;       
+    int32 fitnessClubId = 5;
+    int32 typeOfMembershipId = 6;
+}
+///////////////////////method GetAllClients
+
+
+
+
+///////////////////////method GetClientById
+message GetClientByIdRequest{
+    int32 id = 1;
+}
+
+message GetClientByIdResponce{
+    Client client = 1;
+}
+///////////////////////method GetClientById
+
+
+
+///////////////////////DeleteClientById
+message DeleteClientByIdRequest{
+    int32 id = 1;
+}
+
+message DeleteClientByIdResponce{
+    bool result = 1;
+}
+///////////////////////DeleteClientById
+
+
+///////////////////////UpdateClient
+message UpdateClientRequest{
+    Client client = 1;
+    int32 id = 2;
+}
+
+message UpdateClientResponce{
+
+}
+///////////////////////UpdateClient
+
+
