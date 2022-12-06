@@ -18,26 +18,46 @@ namespace web_app_hw.Services.Implementation
 
         public int Create(Client data)
         {
-            
+            _db.Clients.Add(data);
+            _db.SaveChanges();
+            return data.Id;
         }
 
         public bool Delete(int id)
         {
-            
+            Client client = GetById(id);
+            if (client != null)
+            {
+                _db.Clients.Remove(client);
+                _db.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public IList<Client> GetAll()
         {
-            
+            return _db.Clients.ToList();
         }
 
         public Client GetById(int id)
         {
+            return _db.Clients.FirstOrDefault(x => x.Id == id);
+        }
             
 
-        public bool Update(Client data)
+        public bool Update(ClientDto data, int id)
         {
-            
+            Client client = GetById(id);
+            if (client != null)
+            {
+                client.Name = data.Name;
+                client.Surname = data.Surname;
+                client.FitnessClubId = data.FitnessClubId;
+                _db.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }
