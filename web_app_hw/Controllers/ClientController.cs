@@ -24,12 +24,12 @@ namespace web_app_hw.Controllers
         public IActionResult CreateNewClient([FromBody] ClientDto createClientDto)
         {
             return Ok(_clientRepository.Create(new Client()
-            { 
-                 Name = createClientDto.Name,
-                 Surname = createClientDto.Surname,
-                 BirthDay = createClientDto.BirthDay,
-                 FitnessClubId = createClientDto.FitnessClubId,
-                 TypeOfMembershipId = createClientDto.TypeOfMembershipId
+            {
+                Name = createClientDto.Name,
+                Surname = createClientDto.Surname,
+                BirthDay = createClientDto.BirthDay,
+                FitnessClubId = createClientDto.FitnessClubId,
+                TypeOfMembershipId = createClientDto.TypeOfMembershipId
             }));
         }
 
@@ -53,14 +53,15 @@ namespace web_app_hw.Controllers
             else
                 return BadRequest();
         }
-        
+
         [HttpPost("Update")]
         public IActionResult UpdateClient([FromBody] ClientDto updateClientDto, int id)
         {
-            if (_clientRepository.Update(updateClientDto,id))
+            if (_clientRepository.Update(updateClientDto, id))
                 return Ok();
             else
                 return BadRequest();
         }
+
     }
 }
