@@ -1,6 +1,7 @@
 using FitnessClub.Data;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Collections.Generic;
 using web_app_hw.Controllers;
 using web_app_hw.Models.Dto;
 using web_app_hw.Services;
@@ -12,12 +13,14 @@ namespace FitnessServiceTest
     /*1)class тестировани€ публичный
      *2)подключаем проект тестировани€
      *3)каждый метод тестировани€ должен быть помечен атрибутом
+     *
+     *библиотека Xunit priority - позвол€ет нам выставить приоритетность выполнени€
      */
+
     public class ClientControllerTest
     {
         private readonly ClientController _clientController;
         private readonly Mock<IClientRepository> _mockClientRepository;
-
 
         public ClientControllerTest()
         {
@@ -27,11 +30,15 @@ namespace FitnessServiceTest
         }
 
         [Theory]//
-        [InlineData(new ClientDto()  {Name = "Test",Surname = "Surname", BirthDay = new DateTime(1997,10,08),FitnessClubId = 2,TypeOfMembershipId = 2})]//задаем входные параметры дл€ тестировани€
+        [InlineData(new ClientDto() { Name = "Test", Surname = "Surname", BirthDay = new DateTime(1997, 10, 08), FitnessClubId = 2, TypeOfMembershipId = 2 })]//задаем входные параметры дл€ тестировани€
         public void CreateNewClientTest(ClientDto createClientDto)
         {
-            var result = _clientController.CreateNewClient(createClientDto);
-            Assert.IsAssignableFrom<ActionResult<int>>(result);
+            _mockClientRepository.Setup(repository =>
+            repository.Create(It.IsAny<Client>())).Verifiable();//ѕроверка на верификацию
+            var result = _clientController.CreateNewClient(createClientDto);//создание метода на контроллере
+            //Assert.IsAssignableFrom<ActionResult<int>(result);
+            _mockClientRepository.Verify(repository =>
+            repository.Create(It.IsAny<Client>()), Times.Once);
         }
 
         [Fact]//атрибут указывает нам тестируемый метод
@@ -43,33 +50,12 @@ namespace FitnessServiceTest
 
             //2) использование исполнение тестируемого метода
             var result = _clientController.GetAllClients();
-            _mockClientRepository.Verify(repository=>
-            repository.GetAll(),Times.Once());//в рамках выполнени€ придыдущей инструкции наш метод должен был быть вызван один раз или несколько
+            _mockClientRepository.Verify(repository =>
+            repository.GetAll(), Times.Once());//в рамках выполнени€ придыдущей инструкции наш метод должен был быть вызван один раз или несколько
 
             //3) подготовка эталонного результата метода и проверка на валидность
-            Assert.IsAssignableFrom<ActionResult<IList<Client>>>(result);
+            //Assert.IsAssignableFrom <ActionResult<IList<Client>>>(result);
         }
-
-      
-        public IActionResult GetClientByIdTest([FromRoute] int id)
-        {
-            return Ok(_clientRepository.GetById(id));
-        }
-
-        public void DeleteClientByIdTest([FromRoute] int id)
-        {
-            if (_clientRepository.Delete(id))
-                return Ok();
-            else
-                return BadRequest();
-        }
-
-        public void UpdateClientTest([FromBody] ClientDto updateClientDto, int id)
-        {
-            if (_clientRepository.Update(updateClientDto, id))
-                return Ok();
-            else
-                return BadRequest();
-        }
-    }    
+    }
+}    
 }
