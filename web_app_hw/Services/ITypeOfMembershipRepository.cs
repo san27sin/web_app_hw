@@ -2,7 +2,7 @@
 
 namespace web_app_hw.Services
 {
-    public interface ITypeOfMembershipRepository:IRepository<FitnessClub.Data.TypeOfMembership, int>
+    public interface ITypeOfMembershipRepository:IRepository<FitnessClub.Data.TypeOfMembership, int,TypeOfMembershipDto>
     {
         
     }
